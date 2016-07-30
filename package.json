@@ -1,0 +1,30 @@
+{
+  "name": "form-validation-demo",
+  "version": "0.0.1",
+  "description": "A demo in form validation using Angular 1.5",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdblr/form-validation-demo.git"
+  },
+  "author": "mdblr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdblr/form-validation-demo/issues"
+  },
+  "homepage": "https://github.com/mdblr/form-validation-demo#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-mocks": "^1.5.8",
+    "angular-route": "^1.5.8"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.1.2",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2"
+  }
+}
