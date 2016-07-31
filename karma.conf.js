@@ -17,8 +17,9 @@ module.exports = function(config) {
     files: [
       'app/node_modules/angular/angular.js',
       'app/node_modules/angular-mocks/angular-mocks.js',
-      'app/node_modules/angular-resource/angular-resource.js',
-      'app/**/*.js',
+      'app/node_modules/angular-route/angular-route.js',
+      'app/app.js',
+      'app/form/**/*.js',
       'test/**/*.js'
     ],
 

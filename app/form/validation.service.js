@@ -36,9 +36,14 @@
             return validate(emailObj, id);
         }
 
+        function passwordsMatch(passObj) {
+            return passObj.pass1 !== passObj.pass2 ? true : false;
+        }
+
         return {
           usernameExists,
-          emailExists
+          emailExists,
+          passwordsMatch
         }
     }
 })();
