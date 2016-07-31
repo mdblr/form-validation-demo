@@ -4,7 +4,8 @@
   "description": "A demo in form validation using Angular 1.5",
   "main": "app/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start",
+    "start": "http-server ./app -o"
   },
   "repository": {
     "type": "git",
@@ -18,11 +19,12 @@
   "homepage": "https://github.com/mdblr/form-validation-demo#readme",
   "dependencies": {
     "angular": "^1.5.8",
-    "angular-mocks": "^1.5.8",
     "angular-route": "^1.5.8"
   },
   "devDependencies": {
     "angular-resource": "^1.5.8",
+    "angular-mocks": "^1.5.8",
+    "http-server": "^0.9.0",
     "jasmine-core": "^2.4.1",
     "karma": "^1.1.2",
     "karma-chrome-launcher": "^1.0.1",
