@@ -1,4 +1,4 @@
-'use-strict';
+'use strict';
 (() => {
   angular
   .module('demo',['ngRoute'])
@@ -8,13 +8,13 @@
 
   function config($routeProvider, $locationProvider){
     $routeProvider
-      .when('/', {
+      .when('/user/1/edit', {
         templateUrl: 'form/form.tpl.html',
         controller: 'form',
         controllerAs: 'vm'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/user/1/edit'
       });
   }
 
