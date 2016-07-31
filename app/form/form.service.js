@@ -1,69 +1,54 @@
 'use strict';
+
 (() => {
   angular
     .module('demo')
-    .factory('formService', formService)
+    .factory('formService', formService);
 
-  formService.$inject = ['$http'];
+    formService.$inject = ['$http', 'validationService'];
 
-  function formService($http) {
-    const user = {};
+    function formService($http, validationService) {
 
-    function userGet(id) {
-      return $http
-        .get('./users.json' /* `/api/user/${id}` */ )
-        .then(res => {
-          for (let i in res.data[id - 1]) {
-            user[i] = res.data[id - 1][i];
+        const user = {};
+        const vS = validationService;
+
+        function userGet(id) {
+
+            const usersGET = $http.get('./users.json');
+
+            return usersGET.then(res => {
+              let data = res.data;
+              for (let i in data[id - 1]) {
+                user[i] = data[id - 1][i];
+              }
+              return user;
+            });
+        }
+
+        function userUpdate(user) {
+
+            const username = {
+              username: user.username
+            };
+            const email = {
+              email: user.email
+            };
+            const usernameErr = vS.usernameExists(username, user.id);
+            const emailErr = vS.emailExists(email, user.id);
+
+            Promise.all([usernameErr, emailErr])
+              .then(arr => {
+                if (!(arr[0] || arr[1])) {
+                  console.log('no err')
+                } else {
+                  console.log('err')
+                }
+              });
           }
-          return user;
-        });
+
+          return {
+            userGet,
+            userUpdate
+        }
     }
-
-      function validate(item, id) {
-        // e.g. { username : username } or { email: email }
-        const param = {};
-        const key = item;
-        param[key] = item;
-
-        return $http
-          .get('./users.json', {
-            param
-          })
-          .then(res => {
-            for (let i of res) {
-              if (res[i][item] === item && res[i].id !== id) return true;
-            }
-            return false;
-          });
-      }
-
-      function usernameExists(username, id) {
-        return validate(username, id);
-      }
-
-      function emailExists() {
-        return validate(email, id);
-      }
-
-    function userUpdate() {
-      const usernameErr = usernameExists();
-      const emailErr = emailExists();
-
-      if (!(usernameErr || emailErr)) {
-        return $http
-          .put();
-      } else {
-        //error handling
-      }
-    }
-
-    return {
-      userGet,
-      userUpdate,
-      usernameExists,
-      emailExists
-    }
-  }
-
 })();
