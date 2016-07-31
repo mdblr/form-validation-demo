@@ -2,14 +2,14 @@
 (() => {
   angular
     .module('demo')
-    .controller('form', form);
+    .controller('FormController', FormController);
 
-  form.$inject = ['FormItem'];
+  FormController.$inject = ['formService'];
 
-  function form(FormItem) {
+  function FormController(formService) {
     const vm = this;
 
-    FormItem.userGet(1)
+    formService.userGet(1)
     .then(user => {
       vm.user = user;
       vm.user.confirmPass = vm.user.password;

@@ -10,7 +10,7 @@
     $routeProvider
       .when('/user/1/edit', {
         templateUrl: 'form/form.tpl.html',
-        controller: 'form',
+        controller: 'FormController',
         controllerAs: 'vm'
       })
       .otherwise({
