@@ -2,22 +2,22 @@
   <form id='form'>
     <div class='form-group'>
       <label>Username</label>
-      <input class='form-control' type='text' ng-model='vm.profile.username'></input>
+      <input class='form-control' type='text' ng-model='vm.form.username'></input>
     </div>
     <div class='form-group'>
       <label>Enter email</label>
-      <input class='form-control' type='email' ng-model='vm.profile.email'></input>
+      <input class='form-control' type='email' ng-model='vm.form.email'></input>
     </div>
     <div class='form-group'>
       <label>Enter Password</label>
-      <input class='form-control' type='password' ng-model='vm.profile.password'></input>
+      <input class='form-control' type='password' ng-model='vm.form.password'></input>
     </div>
     <div class='form-group'>
       <label>Confirm Password</label>
-      <input class='form-control' type='password' ng-model='vm.profile.confirmPass'></input>
+      <input class='form-control' type='password' ng-model='vm.form.confirmPass'></input>
     </div>
     <div class='form-group text-center'>
-      <a ng-click='vm.save(vm.profile)' class='btn btn-default'>Save</a>
+      <a ng-click='vm.save(vm.form)' class='btn btn-default'>Save</a>
       <a ng-click='vm.cancel()' class='btn btn-danger'>Cancel</a>
     </div>
   </form>

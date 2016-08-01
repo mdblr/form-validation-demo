@@ -11,7 +11,7 @@
 
       $routeProvider
         .when('/user/1/edit', {
-          templateUrl: 'form/form.tpl.html',
+          templateUrl: 'form/form.html',
           controller: 'FormController',
           controllerAs: 'vm',
           resolve: {
