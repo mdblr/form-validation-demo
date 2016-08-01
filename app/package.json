@@ -2,7 +2,7 @@
   "name": "form-validation-demo",
   "version": "0.0.1",
   "description": "A demo in form validation using Angular 1.5",
-  "main": "app/app.js",
+  "main": "app.js",
   "scripts": {
     "test": "karma start ../karma.conf.js",
     "start": "http-server -o"
