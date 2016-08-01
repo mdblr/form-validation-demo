@@ -9,17 +9,18 @@
 
     function validationService($http) {
 
-        function validate(inputObject, id) {
+        function validate(inputObject, myId) {
 
-            const key = Object.keys(inputObject)[0];
-            const input = inputObject[key];
+            const property = Object.keys(inputObject)[0];
+            const input = inputObject[property].toLowerCase();
             const usersGET = $http.get('./users.json');
 
             return usersGET.then(function(res){
                 let users = res.data;
 
                 for (let i in users) {
-                  if (users[i][key] === input && users[i].id !== id) {
+                  let testCase = users[i][property].toLowerCase();
+                  if (testCase === input && users[i].id !== myId) {
                     return true;
                   }
                 }
@@ -40,7 +41,15 @@
             return passObj.pass1 !== passObj.pass2 ? true : false;
         }
 
+        function checkForChange(userCM, input) {
+            for (let prop in userCM) {
+              if (userCM[prop] !== input[prop]) return false;
+            }
+            return true;
+        }
+
         return {
+          checkForChange,
           usernameExists,
           emailExists,
           passwordsMatch

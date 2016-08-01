@@ -11,63 +11,69 @@
         const user = {};
         const vS = validationService;
         const messages = {};
+        // functions: returnUser, returnAll, userUpdate,
+        // getMessages, clearOldMessages
 
-        function getUser(id) {
+        function returnUser(id) {
+
             if (Object.keys(user).length > 0) {
-              return $timeout(() => {
-                return Promise.resolve(user);
-              }, 500);
+                return $timeout(() => {
+                    return Promise.resolve(user);
+                }, 600);
+
             }
 
-            const usersGET = $http.get('./users.json');
+            const returnAll = $http.get('./users.json');
+            return $timeout(() => {
+                return returnAll.then(function(res) {
+                    const data = res.data;
+                    return Object.assign(user, data[id-1]);
+                });
 
-            return $timeout( () => {
-              return usersGET.then(function(res) {
-                  let data = res.data;
-                  for (let i in data[id - 1]) {
-                      user[i] = data[id - 1][i];
-                  }
-                  return user;
-              });
-            }, 500);
+            }, 600);
         }
 
-        function userUpdate(info) {
+        function userUpdate(formObj) {
 
             const username = {
-              username: info.username
+                username: formObj.username
             };
             const email = {
-              email: info.email
+                email: formObj.email
             };
             const passwords = {
-              pass1: info.password,
-              pass2: info.confirmPass
-            }
+                pass1: formObj.password,
+                pass2: formObj.confirmPass
+            };
 
-            const usernameErr = vS.usernameExists(username, info.id);
-            const emailErr = vS.emailExists(email, info.id);
+            // promises
+            const changesBool = vS.checkForChange(user, formObj);
+            const usernameErr = vS.usernameExists(username, formObj.id);
+            const emailErr = vS.emailExists(email, formObj.id);
             const passErr = vS.passwordsMatch(passwords);
 
-            Promise.all([usernameErr, emailErr, passErr])
+            Promise.all([changesBool, usernameErr, emailErr, passErr])
               .then(function(arr) {
+
                 clearOldMessages();
-                if (!(arr[0] || arr[1] || arr[2])) {
-                  // user.email = email.email;
-                  // user.username = username.username;
-                  // user.password = passwords.pass1;
-                  messages.success = 'Updated successfully!';
-                  console.log('no err')
+                if (arr[0]) {
+                    messages.errors = {};
+                    messages.errors.noChange = true;
+                }
+                else if (arr[1] || arr[2] || arr[3]) {
+                    messages.errors = {};
+                    if (arr[1]) messages.errors.username = true;
+                    if (arr[2]) messages.errors.email = true;
+                    if (arr[3]) messages.errors.passwords = true;
                 } else {
-                  messages.errors = {};
-                  if (arr[0]) messages.errors.username = true;
-                  if (arr[1]) messages.errors.email = true;
-                  if (arr[2]) messages.errors.passwords = true;
-                  console.log('err')
+                    user.email = email.email;
+                    user.username = username.username;
+                    user.password = passwords.pass1;
+                    messages.success = 'Updated successfully!';
                 }
               })
               .then(function() {
-                $route.reload();
+                  $route.reload();
               });
           }
 
@@ -81,10 +87,9 @@
           }
 
           return {
-            getUser,
-            // setUser,
-            userUpdate,
-            getMessages
+              returnUser,
+              userUpdate,
+              getMessages
         }
     }
 })();
