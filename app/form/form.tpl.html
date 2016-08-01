@@ -1,24 +1,32 @@
 <div class='center'>
-  <form>
+  <form id='form'>
     <div class='form-group'>
       <label>Username</label>
-      <input class='form-control' type='text' ng-model='vm.user.username'></input>
+      <input class='form-control' type='text' ng-model='vm.profile.username'></input>
     </div>
     <div class='form-group'>
       <label>Enter email</label>
-      <input class='form-control' type='email' ng-model='vm.user.email'></input>
+      <input class='form-control' type='email' ng-model='vm.profile.email'></input>
     </div>
     <div class='form-group'>
       <label>Enter Password</label>
-      <input class='form-control' type='password' ng-model='vm.user.password'></input>
+      <input class='form-control' type='password' ng-model='vm.profile.password'></input>
     </div>
     <div class='form-group'>
       <label>Confirm Password</label>
-      <input class='form-control' type='password' ng-model='vm.user.confirmPass'></input>
+      <input class='form-control' type='password' ng-model='vm.profile.confirmPass'></input>
     </div>
     <div class='form-group text-center'>
-      <a ng-click='vm.save(vm.user)' class='btn btn-default'>Save</a>
+      <a ng-click='vm.save(vm.profile)' class='btn btn-default'>Save</a>
       <a ng-click='vm.cancel()' class='btn btn-danger'>Cancel</a>
     </div>
   </form>
+  <div id='messages'>
+    <aside ng-if='vm.errors'>
+      {{vm.errors}}
+    </aside>
+    <aside ng-if='vm.success'>
+      {{vm.success}}
+    </aside>
+  </div>
 </div>

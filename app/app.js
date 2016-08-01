@@ -1,5 +1,6 @@
 'use strict';
-(() => {
+
+(function() {
   angular
     .module('demo',['ngRoute'])
     .config(config);
@@ -12,7 +13,12 @@
         .when('/user/1/edit', {
           templateUrl: 'form/form.tpl.html',
           controller: 'FormController',
-          controllerAs: 'vm'
+          controllerAs: 'vm',
+          resolve: {
+            messages: formService => {
+              return formService.getMessages();
+            }
+          }
         })
         .otherwise({
           redirectTo: '/user/1/edit'

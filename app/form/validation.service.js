@@ -1,6 +1,6 @@
 'use strict';
 
-(() => {
+(function() {
   angular
     .module('demo')
     .factory('validationService', validationService);
@@ -15,17 +15,17 @@
             const input = inputObject[key];
             const usersGET = $http.get('./users.json');
 
-          return usersGET.then(res => {
-              let users = res.data;
+            return usersGET.then(function(res){
+                let users = res.data;
 
-              for (let i in users) {
-                if (users[i][key] === input && users[i].id !== id) {
-                  return true;
+                for (let i in users) {
+                  if (users[i][key] === input && users[i].id !== id) {
+                    return true;
+                  }
                 }
-              }
 
-              return false;
-            });
+                return false;
+              });
         }
 
         function usernameExists(usernameObj, id) {

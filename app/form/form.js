@@ -1,24 +1,33 @@
 'use strict';
 
-(() => {
+(function(){
   angular
     .module('demo')
     .controller('FormController', FormController);
 
-    FormController.$inject = ['formService', '$route'];
+    FormController.$inject = ['formService', '$route', 'messages', '$timeout'];
 
-    function FormController(formService, $route) {
+    function FormController(formService, $route, messages, $timeout) {
 
         const vm = this;
         const form = formService;
 
-        form.userGet(1)
-          .then(user => {
-              vm.user = user;
-              vm.user.confirmPass = vm.user.password;
-          })
+        form.getUser(1)
+            .then(function(res) {
+              console.log(res);
+                vm.profile = res;
+                vm.profile.confirmPass = vm.profile.password;
+            })
 
-        vm.save = form.userUpdate;
+        vm.save = formService.userUpdate;
         vm.cancel = $route.reload;
+
+        if (messages.errors) {
+          vm.errors = messages.errors;
+        }
+        else if (messages.success) {
+          vm.success = messages.success;
+        }
+
     }
 })();
