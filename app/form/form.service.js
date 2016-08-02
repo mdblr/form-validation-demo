@@ -11,11 +11,14 @@
         const user = {};
         const vS = validationService;
         const messages = {};
-        // functions: returnUser, returnAll, userUpdate,
-        // getMessages, clearOldMessages
+
+        return {
+            returnUser,
+            userUpdate,
+            getMessages
+        }
 
         function returnUser(id) {
-
             if (Object.keys(user).length > 0) {
                 return $timeout(() => {
                     return Promise.resolve(user);
@@ -34,7 +37,6 @@
         }
 
         function userUpdate(formObj) {
-
             const username = {
                 username: formObj.username
             };
@@ -47,49 +49,44 @@
             };
 
             // promises
+
             const changesBool = vS.checkForChange(user, formObj);
             const usernameErr = vS.usernameExists(username, formObj.id);
             const emailErr = vS.emailExists(email, formObj.id);
             const passErr = vS.passwordsMatch(passwords);
 
             Promise.all([changesBool, usernameErr, emailErr, passErr])
-              .then(function(arr) {
-
-                clearOldMessages();
-                if (arr[0]) {
-                    messages.errors = {};
-                    messages.errors.noChange = true;
-                }
-                else if (arr[1] || arr[2] || arr[3]) {
-                    messages.errors = {};
-                    if (arr[1]) messages.errors.username = true;
-                    if (arr[2]) messages.errors.email = true;
-                    if (arr[3]) messages.errors.passwords = true;
-                } else {
-                    user.email = email.email;
-                    user.username = username.username;
-                    user.password = passwords.pass1;
-                    messages.success = 'Updated successfully!';
-                }
-              })
-              .then(function() {
-                  $route.reload();
-              });
-          }
-
-          function getMessages() {
-              return messages;
-          }
-
-          function clearOldMessages() {
-              delete messages.success;
-              delete messages.errors;
-          }
-
-          return {
-              returnUser,
-              userUpdate,
-              getMessages
+                .then(function(arr) {
+                    clearOldMessages();
+                    if (arr[0]) {
+                        messages.errors = {};
+                        messages.errors.noChange = true;
+                    }
+                    else if (arr[1] || arr[2] || arr[3]) {
+                        messages.errors = {};
+                        if (arr[1]) messages.errors.username = true;
+                        if (arr[2]) messages.errors.email = true;
+                        if (arr[3]) messages.errors.passwords = true;
+                    } else {
+                        user.email = email.email;
+                        user.username = username.username;
+                        user.password = passwords.pass1;
+                        messages.success = 'Updated successfully!';
+                    }
+                })
+                .then(function() {
+                    $route.reload();
+                });
         }
+
+        function getMessages() {
+            return messages;
+        }
+
+        function clearOldMessages() {
+            delete messages.success;
+            delete messages.errors;
+        }
+
     }
 })();
