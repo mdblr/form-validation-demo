@@ -9,6 +9,13 @@
 
     function validationService($http) {
 
+        return {
+          checkForChange,
+          usernameExists,
+          emailExists,
+          passwordsMatch
+        }
+
         function validate(inputObject, myId) {
 
             const property = Object.keys(inputObject)[0];
@@ -19,14 +26,15 @@
                 let users = res.data;
 
                 for (let i in users) {
-                  let testCase = users[i][property].toLowerCase();
-                  if (testCase === input && users[i].id !== myId) {
-                    return true;
-                  }
-                }
 
+                    let testExistent = users[i][property].toLowerCase();
+                    if (testExistent === input && users[i].id !== myId) {
+                      return true;
+                    }
+
+                }
                 return false;
-              });
+            });
         }
 
         function usernameExists(usernameObj, id) {
@@ -46,13 +54,6 @@
               if (userCM[prop] !== input[prop]) return false;
             }
             return true;
-        }
-
-        return {
-          checkForChange,
-          usernameExists,
-          emailExists,
-          passwordsMatch
         }
     }
 })();
